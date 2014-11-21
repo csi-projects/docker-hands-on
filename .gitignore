@@ -1,1 +1,5 @@
 Base-Server/.vagrant/
+.idea
+
+# vagrant boxes
+*.box
