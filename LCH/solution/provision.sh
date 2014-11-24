@@ -1,7 +1,5 @@
 #!/bin/bash -v
 
-#sudo apt-get install mysql-client-core-5.5 -y
-
 sudo docker images
 
 # Docker MySQL
