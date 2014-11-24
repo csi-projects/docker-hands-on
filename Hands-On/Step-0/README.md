@@ -1,5 +1,6 @@
 Step 0 : Installation de l'environnement
-=============================================================
+============================================================  
+> **Objectif :** Installation des outils permettant la mise en oeuvre du TD.  
 
 ### 1- Installation de VirtualBox
 #### Installation

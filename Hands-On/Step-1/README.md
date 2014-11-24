@@ -1,6 +1,9 @@
 Step 1 : La ligne de commande
 ============================================================
-## Quelques ressources importantes
+
+> **Objectif :** Appréhender l'utilisation du vocabulaire de l'écosystème Docker ainsi que les principales fonctionnalités du runtime.  
+
+## Quelques ressources utiles
 
 * Docker.io : https://www.docker.com/
 * Docker HUB Registry : https://registry.hub.docker.com/
