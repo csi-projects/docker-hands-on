@@ -4,7 +4,7 @@
 USE handson;
 
 CREATE TABLE IF NOT EXISTS city (
-  id INTEGER AUTO_INCREMENT, 
+  id INTEGER AUTO_INCREMENT,
   city CHAR(200),
   department CHAR(200), 
   region CHAR(200), 

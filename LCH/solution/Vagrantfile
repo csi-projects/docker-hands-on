@@ -13,6 +13,11 @@ config.vm.define "docker-handson-solution" do |base|
   base.vm.provision :shell, :path => "provision.sh"
   base.vm.network :private_network, ip: "192.168.29.100"
 
+  config.vm.provision "file", source: "files/tomcat/Dockerfile", destination: "tomcat/Dockerfile"
+  config.vm.provision "file", source: "files/tomcat/handson.war", destination: "tomcat/handson.war"
+
+  config.vm.synced_folder "files/", "/files"
+
   config.vm.provider "virtualbox" do |v|
   		v.memory = 1536
   end

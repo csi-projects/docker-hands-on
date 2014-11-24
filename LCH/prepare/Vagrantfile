@@ -21,6 +21,7 @@ config.vm.define "docker-handson" do |base|
 
   config.vm.provider "virtualbox" do |v|
   		v.memory = 1536
+  		v.gui = true
   end
 end
 

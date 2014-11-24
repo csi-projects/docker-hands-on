@@ -8,3 +8,5 @@ DevOps_Docker_EMN.pptx
 TODO.yml
 
 *.gz
+*.war
+**/.vagrant/
