@@ -32,30 +32,23 @@ rpm -i vagrant_1.6.5_{xx}.rpm
 
 ### 3- Importation des serveurs
 
-L'ensemble des VM utilisées pour le TP sous disponible sous `/Servers/`
+La VM utilisée pour le TP est disponible sous `/Servers/Docker-Pactice`
 
-- Afin d'importer les VM lancer les commandes suivantes :
-
->- **Windows** :
+- Afin d'importer la VM lancer la commande suivante :  
 ```sh
-import_servers.bat
+vagrant box add docker_handson docker_handson.box
 ```
 
-> - **Linux / MacOs** :
-```sh
-chmod +x import_servers.sh
-./import_servers.sh
-```
 
-- Vérifier que les servers ont bien été importés via la commande :
+- Vérifier que le server a bien été importé via la commande :
 ```sh
 vagrant box list
 ```
-Vous devez retrouver l'ensemble des .box dans la liste.
+Vous devez retrouver une entrée pour `docker_handson`.
 
 ### 4- Lancer le serveur principal
 
-- Se rendre sous : `/Hands-On/Servers/Docker-Practice/`
+- Toujours sous : `/Hands-On/Servers/Docker-Practice/`
 - Démarrer le serveur via la commande `vagrant up`
 - Se connecter en ssh au serveur via la commande : `vagrant ssh`
 

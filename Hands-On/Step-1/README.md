@@ -62,4 +62,4 @@ Avec les informations listées ci-dessus et l'aide en ligne :
 * Se connecter au serveur MYSQL
 * Vérifier que la table USER existe toujours.
 
-> **Next Step :** Step-2
+> **Next Step :**  [Step-2](https://github.com/csi-projects/docker-hands-on/tree/master/Hands-On/Step-2)
