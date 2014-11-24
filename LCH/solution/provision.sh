@@ -21,6 +21,6 @@ sudo docker build -t tomcat tomcat
 sudo docker images
 
 # Run tomcat with link to mysql
-# sudo docker run --name tomcat-handson --link mysql-handson:mysql -p 8080:8080 -d tomcat
+sudo docker run --name tomcat-handson --link mysql-handson:mysql -p 8080:8080 -d tomcat
 
 sudo docker ps
