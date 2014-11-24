@@ -87,7 +87,7 @@ listen session-webapp :80 (1)
  * Le conteneur doit être lié au premier conteneur tomcat créé plus haut (le lien doit se nommer *t1* * voir haproxy.cfg)
  * Le conteneur doit être lié au second conteneur tomcat créé plus haut (le lien doit se nommer *t2* * voir haproxy.cfg)
 
-** Vérification :**
+**Vérification :**
 * Accéder à l'application : http://192.168.29.100/
 * Accéder plusieurs fois (F5) à l'application
 * Vérifier la répartition de la charge : http://192.168.29.100/stats
