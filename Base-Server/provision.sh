@@ -12,4 +12,4 @@ sudo apt-get install -y mysql-client-core-5.5
 sudo docker pull ubuntu:14.04
 
 # Docker HAProxy
-sudo docker pull tutum/haproxy
+sudo docker pull dockerfile/haproxy

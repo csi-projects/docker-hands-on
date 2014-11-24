@@ -18,6 +18,7 @@ Actuellement, aucun serveur MySQL n'est présent sur le serveur, vous pouvez le 
 ```sh
 $> mysql -u root -h 127.0.0.1 -p
 ```
+*(peu importe le password pour le moment)*  
 
 Le message d'erreur met en évidence l'absence de serveur.
 
@@ -42,7 +43,7 @@ En utilisant la documentation de l'image officielle, démarrer un serveur MySQL 
 
 * Vérifier que votre conteneur `mysql-db` est lancé avec la commande : `sudo docker ps` (l'option `-a` vous permet de voir aussi ceux qui ne sont pas démarré)
 * Afficher les logs du conteneur : `sudo docker logs mysql-db` (--follow permet de faire persister l'affichage)
-* Vérifier que le conteneur utilise bien les processus du serveur (contrairement à une VM ) : `sudo ps -aux`
+* Vérifier que le conteneur utilise bien les processus du serveur (contrairement à une VM ) : `sudo ps -aux`*(repérer mysqld)*
 * Vérifier que le conteneur, en revanche, ne voit que ses propres processus : `sudo docker exec -it mysql-db ps -aux`
 * Examiner la configuration du conteneur : `sudo docker inspect mysql-db`
 
@@ -52,14 +53,14 @@ En utilisant la documentation de l'image officielle, démarrer un serveur MySQL 
 * Se connecter au serveur : `mysql -u root -h 127.0.0.1 -p`
 * Utiliser la base "mysql" : `mysql> use mysql;`
 * Lister les tables : `mysql> show tables;`
-* Supprimer la table USER : `mysql> drop table USER;`
+* Supprimer la table USER : `mysql> drop table user;`
 * Se déconnecter : `mysql> exit;`
 
 #### Récréer un conteneur
 
 Avec les informations listées ci-dessus et l'aide en ligne :
-* Créer un conteneur `mysql-db2` (attention au port)
-* Se connecter au serveur MYSQL
-* Vérifier que la table USER existe toujours.
+* Créer un conteneur `mysql-db2` (sur le port 3307 cette fois)
+* Se connecter au serveur MYSQL : ` mysql -u root -h 127.0.0.1 -P 3307 -p`
+* Vérifier que la table USER existe dans ce conteneur.
 
 > **Next Step :**  [Step-2](https://github.com/csi-projects/docker-hands-on/tree/master/Hands-On/Step-2)

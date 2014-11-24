@@ -1,4 +1,4 @@
-Step 2 : Déploiement d'une application Java (Tomact/MySQL)
+Step 2 : Déploiement d'une application Java (Tomcat/MySQL)
 =============================================================
 
 > **Objectif :** Appréhender l'utilisation des Dockerfile via la "conteneurisation" d'une application Java (Tomcat et MySQL) et la déployer sur un serveur.
@@ -54,4 +54,29 @@ Déployer l'application myapp sur le serveur :
 
 ## 6- Mettre en place un reverse proxy
 
-tutum/haproxy
+Maintenant que nous avons 2 serveurs Tomcat, nous allons mettre en oeuvre un reverse proxy afin d'offir un point d'accès unique à notre application (sur le port 80).
+
+Le reverse proxy sera configuré pour faire du load-balancing (round-robin) sur nos 2 applications.
+
+Nous allons utiliser HAProxy pour cela. Une image a déjà été chargée sur le serveur : `dockerfile/haproxy`  
+Voir : https://registry.hub.docker.com/u/dockerfile/haproxy/  
+
+Pour vous faciliter la configuration, le fichier haproxy.cfg est disponible dans le répertoire courant de github.
+
+Les dernières ligne sont importantes :
+```
+listen session-webapp :80 (1)
+    balance roundrobin (2)
+    server tomcat1 t1:8080 check (3)
+    server tomcat2 t2:8080 check (4)
+    stats enable (5)
+    stats uri /stats
+```
+>(1) Le re
+
+Etapes :  
+* C
+
+voir   * http://www.axioconsulting.fr/2014/05/load-balancing-haproxy-sous-docker/
+
+https://github.com/BenoitCharret/session-webapp
