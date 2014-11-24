@@ -30,7 +30,7 @@ dpkg -i vagrant_1.6.5_{xx}.deb
 rpm -i vagrant_1.6.5_{xx}.rpm
 ```
 
-### 3- Importation des serveurs
+### 3- Importation du serveur
 
 La VM utilisée pour le TP est disponible sous `/Servers/Docker-Pactice`
 
@@ -53,4 +53,4 @@ Vous devez retrouver une entrée pour `docker_handson`.
 - Se connecter en ssh au serveur via la commande : `vagrant ssh`
 
 
-> **Next Step :** [Step-1](https://github.com/csi-projects/docker-hands-on/tree/master/Hands-On/Step-1) 
+> **Next Step :** [Step-1](https://github.com/csi-projects/docker-hands-on/tree/master/Hands-On/Step-1)
