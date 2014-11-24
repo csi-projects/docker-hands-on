@@ -56,14 +56,14 @@ Déployer l'application myapp sur le serveur :
 
 Maintenant que nous avons 2 serveurs Tomcat, nous allons mettre en oeuvre un reverse proxy afin d'offir un point d'accès unique à notre application (sur le port 80).
 
-Le reverse proxy sera configuré pour faire du load-balancing (round-robin) sur nos 2 applications.
+Le reverse proxy sera configuré pour faire du load-balancing (round-robin) sur nos 2 serveurs Tomcat.
 
 Nous allons utiliser HAProxy pour cela. Une image a déjà été chargée sur le serveur : `dockerfile/haproxy`  
 Voir : https://registry.hub.docker.com/u/dockerfile/haproxy/  
 
-Pour vous faciliter la configuration, le fichier haproxy.cfg est disponible dans le répertoire courant de github.
+Pour vous faciliter la configuration, le fichier haproxy.cfg est disponible sous `/home/vagrant/proxy/` du serveur.
 
-Les dernières ligne sont importantes :
+Les dernières lignes sont importantes :
 ```
 listen session-webapp :80 (1)
     balance roundrobin (2)
@@ -72,11 +72,25 @@ listen session-webapp :80 (1)
     stats enable (5)
     stats uri /stats
 ```
->(1) Le re
+>(1) Le proxy écoute sur le port 80  
+>(2) Le load-balancer utilise round-robin  
+>(3) Redirection vers le premier serveur (nom du host t1)  
+>(4) Redirection vers le second serveur (nom du host t2)  
+>(5) Le service de stats de HAProxy est disponible via l'url `/stats`  
 
-Etapes :  
-* C
+**Etapes :**  
+* Avec la documentation de l'image (https://registry.hub.docker.com/u/dockerfile/haproxy/)
+* Démarrer un conteneur en respectant les règles suivantes :
+ * Le conteneur doit se nommer `proxy`
+ * Le port 80 doit être mappé avec celui du serveur  
+ * La configuration de base doit être surchargée (*voir haproxy-override dans la doc de l'image*)
+ * Le conteneur doit être lié au premier conteneur tomcat créé plus haut (le lien doit se nommer *t1* * voir haproxy.cfg)
+ * Le conteneur doit être lié au second conteneur tomcat créé plus haut (le lien doit se nommer *t2* * voir haproxy.cfg)
 
-voir   * http://www.axioconsulting.fr/2014/05/load-balancing-haproxy-sous-docker/
-
-https://github.com/BenoitCharret/session-webapp
+** Vérification : **
+* Accéder à l'application : http://192.168.29.100/
+* Accéder plusieurs fois (F5) à l'application
+* Vérifier la répartition de la charge : http://192.168.29.100/stats
+* Arrêter un des deux conteneurs Tomcat (suco docker stop {nom} )
+* Vérifier que l'application est toujours fonctionnelle : http://192.168.29.100/
+* Regarder de nouveau les stats de HAProxy :   http://192.168.29.100/stats

@@ -10,3 +10,4 @@ TODO.yml
 *.gz
 *.war
 **/.vagrant/
+info
