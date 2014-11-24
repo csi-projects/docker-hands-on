@@ -1,6 +1,6 @@
 #!/bin/bash -v
 
-sudo apt-get install mysql-client-core-5.5 -y
+#sudo apt-get install mysql-client-core-5.5 -y
 
 sudo docker images
 
@@ -8,7 +8,7 @@ sudo docker images
 # - root / password
 # database "handson" with user :
 # - handson / handson
-sudo docker run --name mysql-handson -e MYSQL_ROOT_PASSWORD=password -e MYSQL_USER=handson -e MYSQL_PASSWORD=handson -e MYSQL_DATABASE=handson -d -p 3306:3306 mysql:5.7
+sudo docker run --name mysql-handson -e MYSQL_ROOT_PASSWORD=password -e MYSQL_USER=handson -e MYSQL_PASSWORD=handson -e MYSQL_DATABASE=handson -p 3306:3306 -d mysql:5.7
 
 sudo docker ps
 
@@ -18,6 +18,9 @@ mysql -h"127.0.0.1" -P"3306" -u"handson" -p"handson" < mysql/mysql-create-databa
 # Docker tomcat
 sudo docker build -t tomcat tomcat
 
-# Run tomcat with link to mysql
-#sudo docker run --name tomcat-handson --link mysql-handson:mysql -d tomcat
+sudo docker images
 
+# Run tomcat with link to mysql
+# sudo docker run --name tomcat-handson --link mysql-handson:mysql -p 8080:8080 -d tomcat
+
+sudo docker ps
