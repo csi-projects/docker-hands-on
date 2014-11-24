@@ -9,7 +9,7 @@ Step 2 : Déploiement d'une application Java (Tomact/MySQL)
 * Docker Reference **Dockerfile** : http://docs.docker.com/reference/builder/
 
 
-## La base de données
+## 1- La base de données
 
 Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, créer une image pour le serveur de base de données répondant à la description suivante :
 * L'image doit se baser sur l'image **mysql en version 5.7**
@@ -18,7 +18,7 @@ Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile
 * Respecter le nom de l'image suivant : `emn/myapp-db`
 
 
-## Le serveur d'application
+## 2- Le serveur d'application
 
 Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, créer une image pour le serveur d'application répondant à la description suivante :
 * L'image doit se baser sur l'image **ubuntu 14.04**
@@ -30,7 +30,7 @@ Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile
 * Respecter le nom de l'image suivant : `emn/myapp-server`
 
 
-## Le déploiement
+## 3- Le déploiement
 
 Déployer l'application myapp sur le serveur :
 * Lancer un conteneur de l'image `myapp-db`
@@ -40,18 +40,18 @@ Déployer l'application myapp sur le serveur :
 >* Le conteneur de cette image doit être lié au conteneur de l'image `emn/myapp-db` créée via l'étape précédente. **Nommer ce lien "mysql"**
 
 
-## L'accès à l'application
+## 4- L'accès à l'application
 
 * Accéder à l'application : http://192.168.29.100:8081/
 * Vérifier que l'application soit fonctionnelle en modifiant les données.
 
-## Scalabilité de l'application
+## 5- Scalabilité de l'application
 
 * Lancer une deuxième instance du serveur Tomcat, écoutant sur le port **8082**
 * Accéder à l'application : http://192.168.29.100:8082/
 * Vérifier que l'application soit fonctionnelle en modifiant les données.
 
 
-## Mettre en place un reverse proxy
+## 6- Mettre en place un reverse proxy
 
 tutum/haproxy

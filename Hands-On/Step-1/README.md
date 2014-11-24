@@ -10,7 +10,7 @@ Step 1 : La ligne de commande
 * Docker Reference **Command Line** : http://docs.docker.com/reference/commandline/cli/  
 
 
-## Les Images
+## 1- Les Images
 
 Pour comprendre la notion d'image et de conteneur, nous allons mettre en place un server MySQL.  
 Actuellement, aucun serveur MySQL n'est présent sur le serveur, vous pouvez le vérifier en tentant de vous connecter :
@@ -36,7 +36,7 @@ En utilisant la documentation de l'image officielle, démarrer un serveur MySQL 
 * Le port 3306 du conteneur doit être mappé avec le port 3306 du serveur
 * Le mot de passe pour l'utilisateur `root` doit être `admin`
 
-## Les Conteneurs
+## 2 - Les Conteneurs
 
 #### Utiliser les conteneurs.
 
