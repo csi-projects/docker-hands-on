@@ -1,13 +1,16 @@
 Step 1 : La ligne de commande
 ============================================================
-## Quelques ressources importantes
+
+> **Objectif :** Appréhender l'utilisation du vocabulaire de l'écosystème Docker ainsi que les principales fonctionnalités du runtime.  
+
+## Quelques ressources utiles
 
 * Docker.io : https://www.docker.com/
 * Docker HUB Registry : https://registry.hub.docker.com/
 * Docker Reference **Command Line** : http://docs.docker.com/reference/commandline/cli/  
 
 
-## Les Images
+## 1- Les Images
 
 Pour comprendre la notion d'image et de conteneur, nous allons mettre en place un server MySQL.  
 Actuellement, aucun serveur MySQL n'est présent sur le serveur, vous pouvez le vérifier en tentant de vous connecter :
@@ -33,7 +36,7 @@ En utilisant la documentation de l'image officielle, démarrer un serveur MySQL 
 * Le port 3306 du conteneur doit être mappé avec le port 3306 du serveur
 * Le mot de passe pour l'utilisateur `root` doit être `admin`
 
-## Les Conteneurs
+## 2 - Les Conteneurs
 
 #### Utiliser les conteneurs.
 
@@ -59,4 +62,4 @@ Avec les informations listées ci-dessus et l'aide en ligne :
 * Se connecter au serveur MYSQL
 * Vérifier que la table USER existe toujours.
 
-> **Next Step :** Step-2
+> **Next Step :**  [Step-2](https://github.com/csi-projects/docker-hands-on/tree/master/Hands-On/Step-2)
