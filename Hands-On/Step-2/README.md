@@ -35,9 +35,9 @@ Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile
 Déployer l'application myapp sur le serveur :
 * Lancer un conteneur de l'image `myapp-db`
 * Lancer un conteneur de l'image `myapp-server`
->* Les logs de Tomcat sont disponibles, **sur le serveur** host sous `~/myapp/tomcat/logs`
->* L'application est accessible sur le **port 8081**
->* Le conteneur de cette image doit être lié au conteneur de l'image `emn/myapp-db` créée via l'étape précédente. **Nommer ce lien "mysql"**
+ * Les logs de Tomcat sont disponibles, **sur le serveur** host sous `~/myapp/tomcat/logs`
+ * L'application est accessible sur le **port 8081**
+ * Le conteneur de cette image doit être lié au conteneur de  'image `emn/myapp-db` créée via l'étape précédente. **Nommer ce lien "mysql"**
 
 
 ## 4- L'accès à l'application
@@ -87,7 +87,7 @@ listen session-webapp :80 (1)
  * Le conteneur doit être lié au premier conteneur tomcat créé plus haut (le lien doit se nommer *t1* * voir haproxy.cfg)
  * Le conteneur doit être lié au second conteneur tomcat créé plus haut (le lien doit se nommer *t2* * voir haproxy.cfg)
 
-** Vérification : **
+** Vérification :**
 * Accéder à l'application : http://192.168.29.100/
 * Accéder plusieurs fois (F5) à l'application
 * Vérifier la répartition de la charge : http://192.168.29.100/stats
