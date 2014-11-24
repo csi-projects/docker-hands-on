@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+config.vm.define "docker-handson" do |base|
+  base.vm.box = "precise64"
+  base.vm.hostname = "docker-handson"
+  base.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+  base.vm.provision :shell, :path => "provision.sh"
+  base.vm.network :private_network, ip: "192.168.29.100"
+
+  config.vm.provision "file", source: "files/tomcat/apache-tomcat-7.0.57.tar.gz", destination: "tomcat/apache-tomcat-7.0.57.tar.gz"
+  config.vm.provision "file", source: "files/tomcat/handson.war", destination: "tomcat/handson.war"
+  config.vm.provision "file", source: "files/tomcat/jdk-7u71-linux-x64.gz", destination: "tomcat/jdk-7u71-linux-x64.gz"
+  config.vm.provision "file", source: "files/mysql/mysql-create-database.sql", destination: "mysql/mysql-create-database.sql"
+
+  config.vm.provider "virtualbox" do |v|
+  		v.memory = 1536
+  end
+end
+
+end
