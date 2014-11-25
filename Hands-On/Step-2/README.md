@@ -11,50 +11,111 @@ Step 2 : Déploiement d'une application Java (Tomcat/MySQL)
 
 ## 1- La base de données
 
-Avec l'aide :  
-* de la documentation en ligne sur la création d'un ficher Dockerfile (des exemples sont disponibles à la fin de la [page d'aide](http://docs.docker.com/reference/builder/) )
-* des examples dans le support de présentation  
+Nous allons démarrer la base de données. Pour cela, nous utilisons l'image officielle `mysql` de Docker et nous utilisons le client `mysql` de la machine hôte pour initialiser la base à partir d'un script SQL.
 
-créer une image pour le serveur de base de données répondant à la description suivante :
-* L'image doit se baser sur l'image **mysql**
-* La base de données est créée avec le script `/mysql/mysql-create-database.sql` sur la VM.
-* Respecter le nom de l'image suivant : `emn/myapp-db`
+### 1.1- Démarrer la base de données
 
+Utiliser la commande de lancement de conteneur `docker run` à partir de l'image `mysql` en indiquant :
+* le conteneur sera lancé en tâche de fond (démon)
+* le nom du conteneur `myapp-db`
+* le port `3306` doit être mappé sur le port `3306` de la machine hôte
+* les variables d'environnement doivent être définies :
+  * `MYSQL_ROOT_PASSWORD=password`
+  * `MYSQL_USER=handson`
+  * `MYSQL_PASSWORD=handson`
+  * `MYSQL_DATABASE=handson`
 
-## 2- Le serveur d'application
+#### Vérification
+Vérifier que le conteneur est démarré via `docker ps`.
 
-Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, créer une image pour le serveur d'application répondant à la description suivante :
+Si le conteneur n'est pas visible via `docker ps`, essayez alors avec `docker ps -a` qui affiche les conteneurs démarrés et arrêtés. En effet, en cas d'erreur, le conteneur est arrêté aussitôt.
+
+La commande `docker logs [nom du conteneur]` affiche la sortie console dans le conteneur qu'il n'y a pas eu d'erreur au démarrage.
+
+En cas d'erreur, il est possible de supprimer le conteneur en l'arrêtant via `docker stop [nom du conteneur]` puis en le supprimant via `docker rm [nom du conteneur]`. Il est alors possible de relancer un nouveau conteneur via `docker run`.
+
+### 1.2- Créer les tables et les données
+
+Nous créons les tables et les données de la base via le script SQL :
+* Aller dans le répertoire `/home/vagrant/mysql`
+* Lancer la commande : `mysql -h"127.0.0.1" -P"3306" -u"handson" -p"handson" < mysql/mysql-create-database.sql`
+
+Vérifier que les données ont bien été créées :
+* Lancer la commande : `mysql -h"127.0.0.1" -P"3306" -u"handson" -p"handson"`
+* une fois connecté sur mysql, lancer : `select * from handson.city;` (sans oublier ";")
+* vous devez voir le contenu de la table `city` :
+```
+mysql> select * from handson.city;
++----+-----------+-------------------+-----------------------------+---------+
+| id | city      | department        | region                      | country |
++----+-----------+-------------------+-----------------------------+---------+
+|  1 | Paris     | Paris             | Ile de France               | France  |
+|  2 | Nantes    | Loire-Atlantique  | Pays de la Loire            | France  |
+|  3 | Rennes    | Ille-et-Vilaine   | Bretagne                    | France  |
+|  4 | Marseille | Bouches-du-Rhône  | Provence-Alpes-Côte d'Azur  | France  |
+|  5 | Lyon      | Rhône             | Rhône-Alpes                 | France  |
+|  6 | Bordeaux  | Gironde           | Aquitaine                   | France  |
++----+-----------+-------------------+-----------------------------+---------+
+```
+
+## 2- Le serveur d'applications
+
+### 2.1- Image du serveur d'applications
+
+Nous allons maintenant créer l'image et le conteneur Docker pour le serveur d'application Java/Tomcat.
+
+*Note: pour des raisons d'accès réseau, l'installation de Java et Tomcat s'effectue via des fichiers compressés.*
+
+Nous allons créer et démarrer la base de données dans un conteneur via Docker. Pour cela, nous allons créer le fichier **Dockerfile** :
+* En ligne de commandes, placez-vous dans le répertoire **/home/vagrant**
+* Créer le fichier **Dockerfile** via la commande `nano tomcat/Dockerfile`
+
+Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, nous créons une image pour le serveur d'application qui répond à la description suivante :
 * L'image doit se baser sur l'image **ubuntu 14.04**
-* Présence de **Java en version 1.7.0_71** (Installer le JDK 1.7 en utilisant l'archive `files/tomcat/jdk-7u71-linux-x64.gz` fournie)
-* Présence de **Tomcat en version 7.0.57 ** (Utiliser l'archive `files/tomcat/apache-tomcat-7.0.57.tar.gz` fournie)
-* Les variables d'environnement **JAVA_HOME** et **TOMCAT_HOME** sont correctement renseignées
-* L'application handson doit être déployée (Utiliser l'archive `files/tomcat/handson.war` fournie)
-* Les conteneurs doivent démarrer le serveur Tomcat.
-* Respecter le nom de l'image suivant : `emn/myapp-server`
+* Présence de **Java en version 1.7.0_71** (Installer le JDK 1.7 en utilisant l'archive `tomcat/jdk-7u71-linux-x64.gz` fournie)
+  * Notes : le fichier **jdk-7u71-linux-x64.gz** une fois décompressé crée le répertoire **jdk1.7.0_71**
+* Présence de **Tomcat en version 7.0.57 ** (Utiliser l'archive `tomcat/apache-tomcat-7.0.57.tar.gz` fournie)
+  * Note : le fichier **apache-tomcat-7.0.57** une fois décompressé crée le répertoire **apache-tomcat-7.0.57**
+* La variable d'environnement **JAVA_HOME** est correctement renseignée
+* L'application `handson` doit être déployée (Utiliser l'archive `tomcat/handson.war` fournie)
+* Le conteneur doit démarrer le serveur Tomcat.
+  * Note : pour démarrer Tomcat, exécuter `catalina.sh run` du répertoire `apache-tomcat-7.0.57/bin``
 
+Une fois le fichier **Dockerfile** complété, construire l'image via la commande `docker build` en spécifiant le tag `handson/myapp-server`.
 
-## 3- Le déploiement
+Vérifier que l'image a bien été créée via la commande `docker images`.
 
-Déployer l'application myapp sur le serveur :
-* Lancer un conteneur de l'image `myapp-db`  
- * Le port 3306 du conteneur est mappé avec celui du serveur.
-* Lancer un conteneur de l'image `myapp-server`
- * Les logs de Tomcat sont disponibles, **sur le serveur** host sous `~/myapp/tomcat/logs`
- * L'application est accessible sur le **port 8081**
- * Le conteneur de cette image doit être lié au conteneur de  'image `emn/myapp-db` créée via l'étape précédente. **Nommer ce lien "mysql"**
+### 2.2- Démarrage du conteneur du serveur d'applications
 
+Nous démarrons le conteneur du serveur d'applications en le liant lié au conteneur de la base de données que nous avons démarré précédemment.
+
+Démarrer le conteneur à partir de l'image `handson/myapp-server` avec :
+ * le nom d'image `myapp-server`
+ * l'application est accessible sur le **port 8081**
+ * le conteneur de cette image doit être lié au conteneur de l'image `handson/myapp-db` créée via l'étape précédente. Le nom de ce lien doit être **mysql** dans le conteneur `myapp-server`
+
+#### Vérification
+Vérifier que le conteneur a bien été démarré via la commande `docker ps`.
+
+Si le conteneur n'est pas visible via `docker ps`, essayez alors avec `docker ps -a` qui affiche les conteneurs démarrés et arrêtés. En effet, en cas d'erreur, le conteneur démarré est arrêté aussitôt.
+
+La commande `docker logs [nom du conteneur]` affiche la sortie console dans le conteneur ce qui permet de vérifier que le serveur Tomcat est bien démarré et qu'il n'y a pas eu d'erreur au démarrage.
+
+#### En cas d'erreur
+Il est possible de supprimer le conteneur en l'arrêtant via `docker stop [nom du conteneur]` puis `docker rm [nom du conteneur]`.
+
+Si l'erreur provient du fichier **Dockerfile**, nous avons alors à supprimer le conteneur, à corriger ce fichier **Dockerfile**, à recontruire l'image via `docker build` puis à redémarrer le conteneur via `docker run`.
 
 ## 4- L'accès à l'application
 
 * Accéder à l'application : http://192.168.29.100:8081/
-* Vérifier que l'application soit fonctionnelle en modifiant les données.
+* Vérifier que l'application est fonctionnelle en modifiant les données.
 
 ## 5- Scalabilité de l'application
 
 * Lancer une deuxième instance du serveur Tomcat, écoutant sur le port **8082**
 * Accéder à l'application : http://192.168.29.100:8082/
-* Vérifier que l'application soit fonctionnelle en modifiant les données.
-
+* Vérifier que l'application est fonctionnelle en modifiant les données.
 
 ## 6- Mettre en place un reverse proxy
 
@@ -65,7 +126,7 @@ Le reverse proxy sera configuré pour faire du load-balancing (round-robin) sur 
 Nous allons utiliser HAProxy pour cela. Une image a déjà été chargée sur le serveur : `dockerfile/haproxy`  
 Voir : https://registry.hub.docker.com/u/dockerfile/haproxy/  
 
-Pour vous faciliter la configuration, le fichier `haproxy.cfg` est disponible sous `/home/vagrant/proxy/` du serveur.
+Pour vous faciliter la configuration, le fichier haproxy.cfg est disponible sous `/home/vagrant/proxy/` du serveur.
 
 Les dernières lignes sont importantes :
 ```
