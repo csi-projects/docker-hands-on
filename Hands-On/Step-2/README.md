@@ -35,9 +35,11 @@ Lancer le conteneur via la commande `docker run` avec :
 
 Nous allons maintenant créer l'image et le conteneur Docker pour le serveur d'application Java/Tomcat.
 
-Comme précédemment, nous créons un fichier **Dockerfile**, mais cette fois-ci dans le répertoire **/home/vagrant/tomcat**.
-
 *Note: pour des raisons d'accès réseau, l'installation de Java et Tomcat s'effectue via des fichiers compressés.*
+
+Nous allons créer et démarrer la base de données dans un conteneur via Docker. Pour cela, nous allons créer le fichier **Dockerfile** :
+* En ligne de commandes, placez-vous dans le répertoire **/home/vagrant**
+* Créer le fichier **Dockerfile** via la commande `nano tomcat/Dockerfile`
 
 Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, nous créons une image pour le serveur d'application qui répond à la description suivante :
 * L'image doit se baser sur l'image **ubuntu 14.04**
@@ -50,27 +52,40 @@ Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile
 * Le conteneur doit démarrer le serveur Tomcat.
   * Note : pour démarrer Tomcat, exécuter `catalina.sh run` du répertoire `apache-tomcat-7.0.57/bin``
 
-Après avoir créer le fichier **Dockerfile**, utiliser la commande Docker pour créer l'image qui aura le tag `handson/myapp-server`.
+Une fois le fichier **Dockerfile** complété, construire l'image via la commande `docker build` en spécifiant le tag `handson/myapp-server`.
+
+Vérifier que l'image a bien été créée via la commande `docker images`.
 
 ### 2.2- Démarrage du conteneur du serveur d'applications
 
-Nous démarrons le conteneur du serveur d'applications qui est lié au conteneur de la base de données que nous avons démarré précédemment :
-* Lancer un conteneur nommé `myapp-server` à partir de l'image `handson/myapp-server` avec :
- * Les logs de Tomcat sont disponibles, **sur le serveur** host sous `~/myapp/tomcat/logs`
- * L'application est accessible sur le **port 8081**
- * Le conteneur de cette image doit être lié au conteneur de l'image `handson/myapp-db` créée via l'étape précédente. Le nom de ce lien doit être **mysql** dans le conteneur `myapp-server`
+Nous démarrons le conteneur du serveur d'applications en le liant lié au conteneur de la base de données que nous avons démarré précédemment.
+
+Démarrer le conteneur à partir de l'image `handson/myapp-server` avec :
+ * le nom d'image `myapp-server`
+ * l'application est accessible sur le **port 8081**
+ * le conteneur de cette image doit être lié au conteneur de l'image `handson/myapp-db` créée via l'étape précédente. Le nom de ce lien doit être **mysql** dans le conteneur `myapp-server`
+
+Vérifier que le conteneur a bien été démarré via la commande `docker ps`.
+
+Si le conteneur n'est pas visible via `docker ps`, essayer alors avec `docker ps -a` qui affiche les conteneurs démarrés et arrêtés. En effet, en cas d'erreur, le conteneur démarré est arrêté aussitôt.
+
+La commande `docker logs [nom du conteneur]` affiche la sortie console dans le conteneur ce qui permet de vérifier que le serveur Tomcat est bien démarré et qu'il n'y a pas eu d'erreur au démarrage.
+
+### En cas d'erreur
+Il est possible de supprimer le conteneur en l'arrêtant via `docker stop [nom du conteneur]` puis `docker rm [nom du conteneur]`.
+
+Si l'erreur provient du fichier **Dockerfile**, nous avons alors à supprimer le conteneur, à corriger ce fichier **Dockerfile**, à recontruire l'image via `docker build` puis à redémarrer le conteneur via `docker run`.
 
 ## 4- L'accès à l'application
 
 * Accéder à l'application : http://192.168.29.100:8081/
-* Vérifier que l'application soit fonctionnelle en modifiant les données.
+* Vérifier que l'application est fonctionnelle en modifiant les données.
 
 ## 5- Scalabilité de l'application
 
 * Lancer une deuxième instance du serveur Tomcat, écoutant sur le port **8082**
 * Accéder à l'application : http://192.168.29.100:8082/
-* Vérifier que l'application soit fonctionnelle en modifiant les données.
-
+* Vérifier que l'application est fonctionnelle en modifiant les données.
 
 ## 6- Mettre en place un reverse proxy
 
