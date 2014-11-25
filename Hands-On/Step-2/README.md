@@ -11,12 +11,19 @@ Step 2 : Déploiement d'une application Java (Tomcat/MySQL)
 
 ## 1- La base de données
 
-Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des exemples dans le support de présentation, créer une image pour le serveur de base de données répondant à la description suivante :
+Nous allons créer et démarrer la base de données dans un conteneur via Docker. Pour cela, nous allons créer le fichier **Dockerfile** :
+* En ligne de commandes, placez-vous dans le répertoire **/home/vagrant**
+* Créer le fichier **Dockerfile** via la commande `nano mysql/Dockerfile`
+
+Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des exemples dans le support de présentation, l'image à créer du serveur de base de données doit répondre à la description suivante :
 * L'image doit se baser sur l'image **mysql en version 5.7**
-* La base de données est créée avec le script `files/mysql/mysql-create-database.sql`
+* La base de données est créée avec le script `/home/vagrant/mysql/mysql-create-database.sql`
 * Les dossiers suivant doivent-être persistés : "/etc/mysql" et "/var/lib/mysql"
 * Respecter le nom de l'image suivant : `emn/myapp-db`
 
+Une fois le fichier **Dockerfile** complété, lancer le conteneur via la commande `docker run` avec :
+* le nom d'image `myapp-db`
+* le port `3306` est mappé sur le port `3306` du host
 
 ## 2- Le serveur d'application
 
