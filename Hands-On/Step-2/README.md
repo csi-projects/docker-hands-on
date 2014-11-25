@@ -21,7 +21,11 @@ Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile
 * Les dossiers suivant doivent-être persistés : "/etc/mysql" et "/var/lib/mysql"
 * Respecter le nom de l'image suivant : `emn/myapp-db`
 
-Une fois le fichier **Dockerfile** complété, lancer le conteneur via la commande `docker run` avec :
+Une fois le fichier **Dockerfile** complété, construire l'image via `docker build` et en indiquant le tag `emn/myapp-db`.
+
+Vérifier que l'image a bien été créée via la commande `docker images`.
+
+Lancer le conteneur via la commande `docker run` avec :
 * le nom d'image `myapp-db`
 * le port `3306` est mappé sur le port `3306` du host
 
