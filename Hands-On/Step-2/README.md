@@ -43,7 +43,7 @@ Nous créons les tables et les données de la base via le script SQL :
 Vérifier que les données ont bien été créées :
 * Lancer la commande : `mysql -h"127.0.0.1" -P"3306" -u"handson" -p"handson"`
 * une fois connecté sur mysql, lancer : `select * from handson.city;` (sans oublier ";")
-* vous devez voir la table `city` des données :
+* vous devez voir le contenu de la table `city` :
 ```
 mysql> select * from handson.city;
 +----+-----------+-------------------+-----------------------------+---------+
