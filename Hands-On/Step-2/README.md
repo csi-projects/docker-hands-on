@@ -19,9 +19,9 @@ Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile
 * L'image doit se baser sur l'image **mysql en version 5.7**
 * La base de données est créée avec le script `/home/vagrant/mysql/mysql-create-database.sql`
 * Les dossiers suivant doivent-être persistés : "/etc/mysql" et "/var/lib/mysql"
-* Respecter le nom de l'image suivant : `emn/myapp-db`
+* Respecter le nom de l'image suivant : `handson/myapp-db`
 
-Une fois le fichier **Dockerfile** complété, construire l'image via `docker build` et en indiquant le tag `emn/myapp-db`.
+Une fois le fichier **Dockerfile** complété, construire l'image via `docker build` et en indiquant le tag `handson/myapp-db`.
 
 Vérifier que l'image a bien été créée via la commande `docker images`.
 
@@ -29,26 +29,32 @@ Lancer le conteneur via la commande `docker run` avec :
 * le nom d'image `myapp-db`
 * le port `3306` est mappé sur le port `3306` du host
 
-## 2- Le serveur d'application
+## 2- Le serveur d'applications
 
-Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, créer une image pour le serveur d'application répondant à la description suivante :
+### 2.1- Image du serveur d'applications
+
+Nous allons maintenant créer l'image et le conteneur Docker pour le serveur d'application Java/Tomcat.
+
+Comme précédemment, nous créons un fichier **Dockerfile**, mais cette fois-ci dans le répertoire **/home/vagrant/tomcat**.
+
+Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, nous créons une image pour le serveur d'application qui répond à la description suivante :
 * L'image doit se baser sur l'image **ubuntu 14.04**
 * Présence de **Java en version 1.7.0_71** (Installer le JDK 1.7 en utilisant l'archive `files/tomcat/jdk-7u71-linux-x64.gz` fournie)
 * Présence de **Tomcat en version 7.0.57 ** (Utiliser l'archive `files/tomcat/apache-tomcat-7.0.57.tar.gz` fournie)
 * Les variables d'environnement **JAVA_HOME** et **TOMCAT_HOME** sont correctement renseignées
 * L'application handson doit être déployée (Utiliser l'archive `files/tomcat/handson.war` fournie)
 * Les conteneurs doivent démarrer le serveur Tomcat.
-* Respecter le nom de l'image suivant : `emn/myapp-server`
+* Respecter le nom de l'image suivant : `handson/myapp-server`
 
+Après avoir créer le fichier **Dockerfile**, utiliser la commande Docker pour créer l'image.
 
-## 3- Le déploiement
+### 2.2- Démarrage du conteneur du serveur d'applications
 
-Déployer l'application myapp sur le serveur :
-* Lancer un conteneur de l'image `myapp-db`
+Nous démarrons le conteneur du serveur d'applications qui est lié au conteneur de la base de données que nous avons démarré précédemment :
 * Lancer un conteneur de l'image `myapp-server`
  * Les logs de Tomcat sont disponibles, **sur le serveur** host sous `~/myapp/tomcat/logs`
  * L'application est accessible sur le **port 8081**
- * Le conteneur de cette image doit être lié au conteneur de  'image `emn/myapp-db` créée via l'étape précédente. **Nommer ce lien "mysql"**
+ * Le conteneur de cette image doit être lié au conteneur de  'image `handson/myapp-db` créée via l'étape précédente. **Nommer ce lien "mysql"**
 
 
 ## 4- L'accès à l'application
