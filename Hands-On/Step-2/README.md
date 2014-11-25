@@ -48,6 +48,7 @@ Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile
 * La variable d'environnement **JAVA_HOME** est correctement renseignée
 * L'application `handson` doit être déployée (Utiliser l'archive `tomcat/handson.war` fournie)
 * Le conteneur doit démarrer le serveur Tomcat.
+  * Note : pour démarrer Tomcat, exécuter `catalina.sh run` du répertoire `apache-tomcat-7.0.57/bin``
 
 Après avoir créer le fichier **Dockerfile**, utiliser la commande Docker pour créer l'image qui aura le tag `handson/myapp-server`.
 
