@@ -58,7 +58,7 @@ Nous démarrons le conteneur du serveur d'applications qui est lié au conteneur
 * Lancer un conteneur nommé `myapp-server` à partir de l'image `handson/myapp-server` avec :
  * Les logs de Tomcat sont disponibles, **sur le serveur** host sous `~/myapp/tomcat/logs`
  * L'application est accessible sur le **port 8081**
- * Le conteneur de cette image doit être lié au conteneur de l'image `handson/myapp-db` créée via l'étape précédente. Le nom de ce lien doit être **mysql** pour le conteneur `myapp-server`
+ * Le conteneur de cette image doit être lié au conteneur de l'image `handson/myapp-db` créée via l'étape précédente. Le nom de ce lien doit être **mysql** dans le conteneur `myapp-server`
 
 ## 4- L'accès à l'application
 
