@@ -11,7 +11,7 @@ Step 2 : Déploiement d'une application Java (Tomcat/MySQL)
 
 ## 1- La base de données
 
-Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, créer une image pour le serveur de base de données répondant à la description suivante :
+Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des exemples dans le support de présentation, créer une image pour le serveur de base de données répondant à la description suivante :
 * L'image doit se baser sur l'image **mysql en version 5.7**
 * La base de données est créée avec le script `files/mysql/mysql-create-database.sql`
 * Les dossiers suivant doivent-être persistés : "/etc/mysql" et "/var/lib/mysql"
