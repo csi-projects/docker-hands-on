@@ -32,7 +32,7 @@ rpm -i vagrant_1.6.5_{xx}.rpm
 
 ### 3- Importation du serveur
 
-La VM utilisée pour le TP est disponible sous `/Servers/Docker-Pactice`
+La VM utilisée pour le TP est disponible sous `/Hands-On/Servers/Docker-Pactice`
 
 - Afin d'importer la VM lancer la commande suivante :  
 ```sh
