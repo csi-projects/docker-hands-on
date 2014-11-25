@@ -18,6 +18,7 @@ config.vm.define "docker-handson" do |base|
   config.vm.provision "file", source: "files/tomcat/handson.war", destination: "tomcat/handson.war"
   config.vm.provision "file", source: "files/tomcat/jdk-7u71-linux-x64.gz", destination: "tomcat/jdk-7u71-linux-x64.gz"
   config.vm.provision "file", source: "files/mysql/mysql-create-database.sql", destination: "mysql/mysql-create-database.sql"
+  config.vm.provision "file", source: "files/proxy/haproxy.cfg", destination: "proxy/haproxy.cfg"
 
   config.vm.provider "virtualbox" do |v|
       v.memory = 1536

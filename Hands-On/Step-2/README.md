@@ -11,10 +11,13 @@ Step 2 : Déploiement d'une application Java (Tomcat/MySQL)
 
 ## 1- La base de données
 
-Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, créer une image pour le serveur de base de données répondant à la description suivante :
-* L'image doit se baser sur l'image **mysql en version 5.7**
-* La base de données est créée avec le script `files/mysql/mysql-create-database.sql`
-* Les dossiers suivant doivent-être persistés : "/etc/mysql" et "/var/lib/mysql"
+Avec l'aide :  
+* de la documentation en ligne sur la création d'un ficher Dockerfile (des exemples sont disponibles à la fin de la [page d'aide](http://docs.docker.com/reference/builder/) )
+* des examples dans le support de présentation  
+
+créer une image pour le serveur de base de données répondant à la description suivante :
+* L'image doit se baser sur l'image **mysql**
+* La base de données est créée avec le script `/mysql/mysql-create-database.sql` sur la VM.
 * Respecter le nom de l'image suivant : `emn/myapp-db`
 
 
@@ -33,7 +36,8 @@ Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile
 ## 3- Le déploiement
 
 Déployer l'application myapp sur le serveur :
-* Lancer un conteneur de l'image `myapp-db`
+* Lancer un conteneur de l'image `myapp-db`  
+ * Le port 3306 du conteneur est mappé avec celui du serveur.
 * Lancer un conteneur de l'image `myapp-server`
  * Les logs de Tomcat sont disponibles, **sur le serveur** host sous `~/myapp/tomcat/logs`
  * L'application est accessible sur le **port 8081**
@@ -61,7 +65,7 @@ Le reverse proxy sera configuré pour faire du load-balancing (round-robin) sur 
 Nous allons utiliser HAProxy pour cela. Une image a déjà été chargée sur le serveur : `dockerfile/haproxy`  
 Voir : https://registry.hub.docker.com/u/dockerfile/haproxy/  
 
-Pour vous faciliter la configuration, le fichier haproxy.cfg est disponible sous `/home/vagrant/proxy/` du serveur.
+Pour vous faciliter la configuration, le fichier `haproxy.cfg` est disponible sous `/home/vagrant/proxy/` du serveur.
 
 Les dernières lignes sont importantes :
 ```

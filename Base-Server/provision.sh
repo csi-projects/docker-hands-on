@@ -5,7 +5,7 @@ sudo apt-get update
 sudo apt-get install -y curl nano locate; curl -s https://get.docker.io/ubuntu/ | sudo sh
 
 # Docker mysql : https://registry.hub.docker.com/_/mysql/
-sudo docker pull mysql:5.7
+sudo docker pull mysql
 sudo apt-get install -y mysql-client-core-5.5
 
 # Docker ubuntu:14.04
