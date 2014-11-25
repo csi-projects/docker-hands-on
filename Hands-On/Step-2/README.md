@@ -11,23 +11,34 @@ Step 2 : Déploiement d'une application Java (Tomcat/MySQL)
 
 ## 1- La base de données
 
-Nous allons créer et démarrer la base de données dans un conteneur via Docker. Pour cela, nous allons créer le fichier **Dockerfile** :
-* En ligne de commandes, placez-vous dans le répertoire **/home/vagrant**
-* Créer le fichier **Dockerfile** via la commande `nano mysql/Dockerfile`
+Nous allons démarrer la base de données. Pour cela, nous utilisons l'image officielle `mysql` de Docker et nous utilisons le client `mysql` de la machine hôte pour initialiser la base à partir d'un script SQL.
 
-Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des exemples dans le support de présentation, l'image à créer du serveur de base de données doit répondre à la description suivante :
-* L'image doit se baser sur l'image **mysql en version 5.7**
-* La base de données est créée avec le script `/home/vagrant/mysql/mysql-create-database.sql`
-* Les dossiers suivant doivent-être persistés : "/etc/mysql" et "/var/lib/mysql"
-* Respecter le nom de l'image suivant : `handson/myapp-db`
+### 1.1- Démarrer la base de données
 
-Une fois le fichier **Dockerfile** complété, construire l'image via `docker build` et en indiquant le tag `handson/myapp-db`.
+Utiliser la commande de lancement de conteneur `docker run` à partir de l'image `mysql` en indiquant :
+* le conteneur sera lancé en tâche de fond (démon)
+* le nom du conteneur `myapp-db`
+* le port `3306` doit être mappé sur le port `3306` de la machine hôte
+* les variables d'environnement doivent être définies :
+  * `MYSQL_ROOT_PASSWORD=password`
+  * `MYSQL_USER=handson`
+  * `MYSQL_PASSWORD=handson`
+  * `MYSQL_DATABASE=handson`
 
-Vérifier que l'image a bien été créée via la commande `docker images`.
+#### Vérification
+Vérifier que le conteneur est démarré via `docker ps`.
 
-Lancer le conteneur via la commande `docker run` avec :
-* le nom d'image `myapp-db`
-* le port `3306` est mappé sur le port `3306` du host
+Si le conteneur n'est pas visible via `docker ps`, essayez alors avec `docker ps -a` qui affiche les conteneurs démarrés et arrêtés. En effet, en cas d'erreur, le conteneur est arrêté aussitôt.
+
+La commande `docker logs [nom du conteneur]` affiche la sortie console dans le conteneur qu'il n'y a pas eu d'erreur au démarrage.
+
+En cas d'erreur, il est possible de supprimer le conteneur en l'arrêtant via `docker stop [nom du conteneur]` puis en le supprimant via `docker rm [nom du conteneur]`. Il est alors possible de relancer un nouveau conteneur via `docker run`.
+
+### 1.2- Créer les tables et les données
+
+Nous créons les tables et les données de la base via le script SQL :
+* Aller dans le répertoire `/home/vagrant/mysql`
+* Lancer la commande : `mysql -h"127.0.0.1" -P"3306" -u"handson" -p"handson" < mysql/mysql-create-database.sql`
 
 ## 2- Le serveur d'applications
 
@@ -65,13 +76,14 @@ Démarrer le conteneur à partir de l'image `handson/myapp-server` avec :
  * l'application est accessible sur le **port 8081**
  * le conteneur de cette image doit être lié au conteneur de l'image `handson/myapp-db` créée via l'étape précédente. Le nom de ce lien doit être **mysql** dans le conteneur `myapp-server`
 
+#### Vérification
 Vérifier que le conteneur a bien été démarré via la commande `docker ps`.
 
-Si le conteneur n'est pas visible via `docker ps`, essayer alors avec `docker ps -a` qui affiche les conteneurs démarrés et arrêtés. En effet, en cas d'erreur, le conteneur démarré est arrêté aussitôt.
+Si le conteneur n'est pas visible via `docker ps`, essayez alors avec `docker ps -a` qui affiche les conteneurs démarrés et arrêtés. En effet, en cas d'erreur, le conteneur démarré est arrêté aussitôt.
 
 La commande `docker logs [nom du conteneur]` affiche la sortie console dans le conteneur ce qui permet de vérifier que le serveur Tomcat est bien démarré et qu'il n'y a pas eu d'erreur au démarrage.
 
-### En cas d'erreur
+#### En cas d'erreur
 Il est possible de supprimer le conteneur en l'arrêtant via `docker stop [nom du conteneur]` puis `docker rm [nom du conteneur]`.
 
 Si l'erreur provient du fichier **Dockerfile**, nous avons alors à supprimer le conteneur, à corriger ce fichier **Dockerfile**, à recontruire l'image via `docker build` puis à redémarrer le conteneur via `docker run`.
