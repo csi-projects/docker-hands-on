@@ -40,6 +40,24 @@ Nous créons les tables et les données de la base via le script SQL :
 * Aller dans le répertoire `/home/vagrant/mysql`
 * Lancer la commande : `mysql -h"127.0.0.1" -P"3306" -u"handson" -p"handson" < mysql/mysql-create-database.sql`
 
+Vérifier que les données ont bien été créées :
+* Lancer la commande : `mysql -h"127.0.0.1" -P"3306" -u"handson" -p"handson"`
+* une fois connecté sur mysql, lancer : `select * from handson.city;` (sans oublier ";")
+* vous devez voir la table `city` des données :
+```
+mysql> select * from handson.city;
++----+-----------+-------------------+-----------------------------+---------+
+| id | city      | department        | region                      | country |
++----+-----------+-------------------+-----------------------------+---------+
+|  1 | Paris     | Paris             | Ile de France               | France  |
+|  2 | Nantes    | Loire-Atlantique  | Pays de la Loire            | France  |
+|  3 | Rennes    | Ille-et-Vilaine   | Bretagne                    | France  |
+|  4 | Marseille | Bouches-du-Rhône  | Provence-Alpes-Côte d'Azur  | France  |
+|  5 | Lyon      | Rhône             | Rhône-Alpes                 | France  |
+|  6 | Bordeaux  | Gironde           | Aquitaine                   | France  |
++----+-----------+-------------------+-----------------------------+---------+
+```
+
 ## 2- Le serveur d'applications
 
 ### 2.1- Image du serveur d'applications
