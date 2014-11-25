@@ -42,9 +42,9 @@ Comme précédemment, nous créons un fichier **Dockerfile**, mais cette fois-ci
 Avec l'aide de la documentation en ligne sur la création d'un ficher Dockerfile et des examples dans le support de présentation, nous créons une image pour le serveur d'application qui répond à la description suivante :
 * L'image doit se baser sur l'image **ubuntu 14.04**
 * Présence de **Java en version 1.7.0_71** (Installer le JDK 1.7 en utilisant l'archive `tomcat/jdk-7u71-linux-x64.gz` fournie)
-  * Notes : le fichier **jdk-7u71-linux-x64.gz** une fois décompressée crée le répertoire **jdk1.7.0_71**
+  * Notes : le fichier **jdk-7u71-linux-x64.gz** une fois décompressé crée le répertoire **jdk1.7.0_71**
 * Présence de **Tomcat en version 7.0.57 ** (Utiliser l'archive `tomcat/apache-tomcat-7.0.57.tar.gz` fournie)
-  * Note : le fichier **apache-tomcat-7.0.57** une fois décompressée crée le répertoire **apache-tomcat-7.0.57**
+  * Note : le fichier **apache-tomcat-7.0.57** une fois décompressé crée le répertoire **apache-tomcat-7.0.57**
 * La variable d'environnement **JAVA_HOME** est correctement renseignée
 * L'application `handson` doit être déployée (Utiliser l'archive `tomcat/handson.war` fournie)
 * Le conteneur doit démarrer le serveur Tomcat.
